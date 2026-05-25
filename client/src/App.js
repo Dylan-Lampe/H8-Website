@@ -16,7 +16,6 @@ function App() {
 
   return (
     <div>
-
       <Form/>
 
       {(typeof backendData.users === 'undefined') ? (
