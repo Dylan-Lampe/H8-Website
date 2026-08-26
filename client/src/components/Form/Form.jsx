@@ -9,21 +9,26 @@ const Form = () => {
   
   async function handleSubmit(e) {
     e.preventDefault()
-        const response = await fetch("/api/signup", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({username, password})
-        }) 
-        const data = await response.json()
-        console.log(data.message)
-    
-    if (response.ok) {
-        setUsername('')     
-        setPassword('')
-        setSubmittedMessageToggled(true)
-    } else {
-        console.log(data.message)
-    } 
+        try {
+            const response = await fetch("/api/signup", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({username, password})
+            }) 
+            const data = await response.json()
+            console.log(data.message)
+        
+            if (response.ok) {
+                setUsername('')     
+                setPassword('')
+                setSubmittedMessageToggled(true)
+            } else {
+                console.log(data.message)
+            } 
+        } catch (error) {
+            console.log("Request Failed:", error)
+        }
+        
   }
 
   return (
