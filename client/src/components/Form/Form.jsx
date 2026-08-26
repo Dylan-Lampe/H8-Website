@@ -7,12 +7,23 @@ const Form = () => {
   const [password, setPassword] = useState('')
   const [submittedMessageToggled, setSubmittedMessageToggled] = useState(false)
   
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
-
-    setUsername('')
-    setPassword('')
-    setSubmittedMessageToggled(true)
+        const response = await fetch("/api/signup", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({username, password})
+        }) 
+        const data = await response.json()
+        console.log(data.message)
+    
+    if (response.ok) {
+        setUsername('')     
+        setPassword('')
+        setSubmittedMessageToggled(true)
+    } else {
+        console.log(data.message)
+    } 
   }
 
   return (
@@ -31,7 +42,7 @@ const Form = () => {
         <div className='form-group'>
             <label>Password:</label>
             <input
-                type='text'
+                type='password'
                 placeholder='Doe'
                 required
                 value={password}
